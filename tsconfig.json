@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    // File Layout
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // Environment Settings
+    "module": "nodenext",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": ["node"],
+
+    // sequelize-typescript uses legacy decorators.
+    // useDefineForClassFields must stay false: with ES class fields the model
+    // properties would shadow Sequelize's prototype getters and always read undefined.
+    // emitDecoratorMetadata stays OFF: it emits eager `design:type` references
+    // that blow up on the circular model imports (User <-> Wallet <-> Message).
+    // Every @Column declares its type explicitly, so the metadata is not needed.
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "useDefineForClassFields": false,
+
+    // Other Outputs
+    // No declaration output: this is an application, not a published library.
+    // (rewriteRelativeImportExtensions also does not rewrite .d.ts specifiers.)
+    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+
+    // Write ".ts" in relative imports; tsc rewrites them to ".js" on emit,
+    // so the compiled output in dist/ stays valid Node ESM.
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+
+    // Recommended Options
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}
